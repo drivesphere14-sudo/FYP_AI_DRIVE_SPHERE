@@ -12,8 +12,7 @@ import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { getGPSOnce } from "@/lib/firebase/iot-service";
 
 export async function GET(req: NextRequest) {
-  const authError = await requireAdmin(req);
-  if (authError) return authError;
+  await requireAdmin();
 
   const gps = await getGPSOnce();
 

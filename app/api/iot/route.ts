@@ -13,8 +13,7 @@ import { setRelay, getRelayState, getGPSOnce } from "@/lib/firebase/iot-service"
 
 // ── GET — read current IoT state snapshot ────────────────────────────────────
 export async function GET(req: NextRequest) {
-  const authError = await requireAdmin(req);
-  if (authError) return authError;
+  await requireAdmin();
 
   const [relay, gps] = await Promise.all([getRelayState(), getGPSOnce()]);
 
@@ -23,8 +22,7 @@ export async function GET(req: NextRequest) {
 
 // ── POST — set relay ──────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-  const authError = await requireAdmin(req);
-  if (authError) return authError;
+  await requireAdmin();
 
   const body = await req.json().catch(() => null);
   const relay = body?.relay;
